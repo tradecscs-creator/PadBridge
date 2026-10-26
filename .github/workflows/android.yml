@@ -1,0 +1,38 @@
+name: Android beta checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: android-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@0723195856401067f7a2779048b490ace7a47d7c # v5
+      - name: Android SDK
+        run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0'
+      - name: SDK-free beta tests and release candidate
+        run: bash ./gradlew --no-daemon testFreeDebugUnitTest assembleFreeDebug assembleFreeRelease bundleFreeRelease lintFreeDebug lintFreeRelease
+      - name: Separate AdMob test demonstration
+        run: bash ./gradlew --no-daemon assembleAdmobDebug lintAdmobDebug
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: beta-builds-and-reports
+          path: |
+            app/build/outputs/apk/
+            app/build/outputs/bundle/
+            app/build/reports/
+            app/build/test-results/
+          retention-days: 14
+# Development/unsigned candidates only. Never expose signing keys to PR jobs.
