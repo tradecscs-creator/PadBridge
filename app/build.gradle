@@ -1,0 +1,48 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'dev.padbridge.app'
+    compileSdk 36
+    buildToolsVersion '36.0.0'
+    defaultConfig {
+        applicationId 'dev.padbridge.app'
+        minSdk 29
+        targetSdk 36
+        versionCode 53
+        versionName '0.5.3-root-beta'
+    }
+    flavorDimensions 'distribution'
+    productFlavors {
+        free {
+            dimension 'distribution'
+            isDefault = true
+            buildConfigField 'boolean', 'ROOT_START_ALLOWED', 'true'
+            resValue 'string', 'app_name', 'PadBridge Root'
+        }
+        admob {
+            dimension 'distribution'
+            buildConfigField 'boolean', 'ROOT_START_ALLOWED', 'false'
+            resValue 'string', 'app_name', 'PadBridge AdMob Demo'
+        }
+    }
+    buildTypes {
+        debug { applicationIdSuffix '.beta'; versionNameSuffix '-debug'; resValue 'string', 'app_name', 'PadBridge Root Beta' }
+        release { minifyEnabled true; shrinkResources true; proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro' }
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_1_8; targetCompatibility JavaVersion.VERSION_1_8 }
+    buildFeatures { buildConfig true }
+    lint { abortOnError true }
+}
+androidComponents {
+    // The SDK is available only in an explicitly selected debug demonstration.
+    beforeVariants(selector().withFlavor('distribution', 'admob').withBuildType('release')) { variant ->
+        variant.enable = false
+    }
+    onVariants(selector().withFlavor('distribution', 'admob').withBuildType('debug')) { variant ->
+        variant.applicationId.set('dev.padbridge.app.admobdemo')
+    }
+}
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+    admobImplementation 'com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk:1.6.0'
+    admobImplementation 'com.google.android.ump:user-messaging-platform:4.0.0'
+}
