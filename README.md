@@ -2,7 +2,9 @@
 
 **Your controller. More possibilities.**
 
-PadBridge connects a Bluetooth or USB gamepad to a **local virtual Xbox controller** on a rooted Android phone. It is designed for **Call of Duty: Mobile (CODM)** and other Android games with native controller input.
+PadBridge is an **Xbox controller emulator for compatible Android gamepads**. On a rooted Android phone, it reads your Bluetooth or USB gamepad and creates a **local virtual Xbox controller** for **Call of Duty: Mobile (CODM)** and other games with native controller input.
+
+**Native controller input — no touch mapping.** The game receives sticks, triggers, buttons and D-pad events from the virtual Xbox controller. PadBridge does not convert buttons into screen taps or require a touch-control overlay.
 
 Use the controller you already own, adjust its layout, and keep a separate profile for each model.
 
@@ -19,7 +21,7 @@ Use the controller you already own, adjust its layout, and keep a separate profi
 - Provides pause and stop controls that release the physical gamepad.
 - Runs directly on the phone after root access is configured; no PC or debugging activation is needed during use.
 
-PadBridge uses controller input rather than screen-touch mapping. Compatibility depends on the phone, controller mode and game.
+PadBridge is designed for compatible dual-stick gamepads. Profiles adapt their button and axis layouts to Xbox-style input. Compatibility depends on the phone, controller mode and game.
 
 ## What you need
 
@@ -68,7 +70,7 @@ The source also contains a separate Google test-banner demo. It cannot start the
 JDK 17, Android SDK Platform 36, Build Tools 36.0.0 and the included Gradle 8.13 wrapper:
 
 ```sh
-./gradlew testFreeDebugUnitTest assembleFreeDebug assembleFreeRelease bundleFreeRelease lintFreeDebug lintFreeRelease
+bash ./gradlew testFreeDebugUnitTest assembleFreeDebug assembleFreeRelease bundleFreeRelease lintFreeDebug lintFreeRelease
 ```
 
 On Windows, use `gradlew.bat`. Release outputs are unsigned by default; keep signing keys outside the repository. [Developer notes](docs/DEVELOPMENT.md).
