@@ -1,0 +1,6 @@
+plugins { id 'com.android.application' version '8.13.2' apply false }
+def externalBuild = System.getenv('PADBRIDGE_BUILD_DIR')
+if (externalBuild) {
+    layout.buildDirectory = file("${externalBuild}/root")
+    subprojects { layout.buildDirectory = file("${externalBuild}/${project.name}") }
+}
