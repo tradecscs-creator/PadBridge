@@ -1,0 +1,24 @@
+name: Controller compatibility
+description: Report a tested phone, controller, connection mode and game
+title: "[Compatibility] "
+body:
+  - type: input
+    id: app
+    attributes:
+      label: PadBridge version and build
+    validations:
+      required: true
+  - type: input
+    id: hardware
+    attributes:
+      label: Controller, connection mode, phone, Android and root-manager version
+      description: Do not include serial numbers or activation tokens.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and observed behavior
+      description: Include game version and exact steps if relevant. Check diagnostics before sharing them.
+    validations:
+      required: true
