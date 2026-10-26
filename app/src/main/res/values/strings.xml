@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name" translatable="false">PadBridge</string>
+    <string name="dead_zone">Dead zone: %1$d%%</string>
+    <string name="button_status">%1$s · %2$s</string>
+</resources>
